@@ -1,0 +1,34 @@
+<app-header icon="add_box" title="Cadastrar Produto" [buttons]="[
+    { label: 'Voltar', icon: 'arrow_back', routerLink: '/products', color: 'primary', type: 'stroked' }
+  ]"></app-header>
+<div class="product-create-container">
+    <h2>Cadastrar Novo Produto</h2>
+    <div *ngIf="loading" class="create-loading-container">
+        <mat-progress-spinner mode="indeterminate" color="primary"></mat-progress-spinner>
+        <p class="loading-text">Processando...</p>
+    </div>
+    <form (ngSubmit)="submit()" #form="ngForm" *ngIf="!loading">
+        <div class="form-group">
+            <label for="name">Nome*</label>
+            <input id="name" name="name" [(ngModel)]="name" required [disabled]="loading" />
+        </div>
+        <div class="form-group">
+            <label for="description">Descrição*</label>
+            <textarea id="description" name="description" [(ngModel)]="description" required
+                [disabled]="loading"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Preço*</label>
+            <input id="price" name="price" type="number" min="0.01" step="0.01" [(ngModel)]="price" required
+                [disabled]="loading" />
+        </div>
+        <div class="form-group">
+            <label for="image">Imagem (URL)</label>
+            <input id="image" name="image" [(ngModel)]="image" [disabled]="loading"
+                placeholder="Cole a URL da imagem aqui" />
+        </div>
+        <div *ngIf="error" class="error-message">{{ error }}</div>
+        <div *ngIf="success" class="success-message">{{ success }}</div>
+        <button type="submit" [disabled]="loading">Cadastrar</button>
+    </form>
+</div>

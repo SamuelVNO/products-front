@@ -1,0 +1,73 @@
+<div class="product-detail-container">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Carregando produto...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="error && !loading" class="error-message">
+        <p>{{ error }}</p>
+        <button (click)="loadProduct()" class="retry-btn">Tentar Novamente</button>
+        <button (click)="goBack()" class="back-btn">Voltar</button>
+    </div>
+
+    <!-- Product Detail -->
+    <div *ngIf="product && !loading" class="product-detail">
+        <app-header icon="storefront" title="Detalhes do Produto" [buttons]="[
+                { label: 'Voltar', icon: 'arrow_back', click: goBack.bind(this), color: 'primary', type: 'stroked' },
+                { label: 'Carrinho', icon: 'shopping_cart', routerLink: '/cart', color: 'primary', type: 'stroked' }
+            ]"></app-header>
+
+        <div class="product-content">
+            <div class="product-image-section">
+                <div class="product-image">
+                    <img *ngIf="product.image; else noImage" [src]="product.image" [alt]="product.name"
+                        (error)="onImageError($event)">
+                    <ng-template #noImage>
+                        <div class="no-image">Imagem não disponível</div>
+                    </ng-template>
+                </div>
+            </div>
+
+            <div class="product-info-section">
+                <h1 class="product-name">{{ product.name }}</h1>
+
+                <div class="product-price">
+                    R$ {{ product.price.toFixed(2) }}
+                </div>
+
+                <div class="product-description">
+                    <h3>Descrição</h3>
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <div class="add-to-cart-section">
+                    <div class="quantity-controls">
+                        <label for="quantity">Quantidade:</label>
+                        <div class="quantity-input-group">
+                            <button type="button" (click)="updateQuantity(-1)" class="quantity-btn"
+                                [disabled]="quantity <= 1">
+                                -
+                            </button>
+                            <input type="number" id="quantity" [(ngModel)]="quantity" min="1" max="99"
+                                class="quantity-input">
+                            <button type="button" (click)="updateQuantity(1)" class="quantity-btn"
+                                [disabled]="quantity >= 99">
+                                +
+                            </button>
+                        </div>
+                    </div>
+
+                    <button (click)="addToCart()" class="add-to-cart-btn">
+                        Adicionar ao Carrinho
+                    </button>
+
+                    <div class="total-price" *ngIf="quantity > 1">
+                        Total: R$ {{ (product.price * quantity).toFixed(2) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
