@@ -12,6 +12,7 @@ export interface HeaderButton {
   color?: string;
   click?: () => void;
   type?: 'raised' | 'stroked' | 'basic' | 'flat';
+  count?: number;
 }
 
 @Component({
@@ -30,32 +31,40 @@ export interface HeaderButton {
                   [color]="btn.color || 'primary'"
                   class="toolbar-btn"
                   [routerLink]="btn.routerLink"
-                  (click)="btn.click && btn.click()">
+                  (click)="btn.click && btn.click()"
+                  style="position: relative;">
             <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon> {{ btn.label }}
+            <span *ngIf="btn.count && btn.count > 0" class="cart-badge">{{ btn.count }}</span>
           </button>
           <button *ngSwitchCase="'stroked'"
                   mat-stroked-button
                   [color]="btn.color || 'primary'"
                   class="toolbar-btn"
                   [routerLink]="btn.routerLink"
-                  (click)="btn.click && btn.click()">
+                  (click)="btn.click && btn.click()"
+                  style="position: relative;">
             <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon> {{ btn.label }}
+            <span *ngIf="btn.count && btn.count > 0" class="cart-badge">{{ btn.count }}</span>
           </button>
           <button *ngSwitchCase="'flat'"
                   mat-flat-button
                   [color]="btn.color || 'primary'"
                   class="toolbar-btn"
                   [routerLink]="btn.routerLink"
-                  (click)="btn.click && btn.click()">
+                  (click)="btn.click && btn.click()"
+                  style="position: relative;">
             <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon> {{ btn.label }}
+            <span *ngIf="btn.count && btn.count > 0" class="cart-badge">{{ btn.count }}</span>
           </button>
           <button *ngSwitchCase="'basic'"
                   mat-button
                   [color]="btn.color || 'primary'"
                   class="toolbar-btn"
                   [routerLink]="btn.routerLink"
-                  (click)="btn.click && btn.click()">
+                  (click)="btn.click && btn.click()"
+                  style="position: relative;">
             <mat-icon *ngIf="btn.icon">{{ btn.icon }}</mat-icon> {{ btn.label }}
+            <span *ngIf="btn.count && btn.count > 0" class="cart-badge">{{ btn.count }}</span>
           </button>
         </ng-container>
       </ng-container>

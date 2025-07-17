@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Subject, takeUntil, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Subject, takeUntil, debounceTime, distinctUntilChanged, Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Product, ProductFilters } from '../../models/product.model';
@@ -43,6 +43,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   showCategoryDropdown = false;
   private destroy$ = new Subject<void>();
   deletingProductId: string | null = null;
+  cartCount = 0;
+  private cartSub: Subscription | null = null;
 
   constructor(
     private productService: ProductService,
@@ -60,11 +62,15 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadProducts();
     this.setupFilterSubscription();
+    this.cartSub = this.cartService.cart$.subscribe(cart => {
+      this.cartCount = cart.totalItems;
+    });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (this.cartSub) this.cartSub.unsubscribe();
   }
 
   private setupFilterSubscription(): void {
@@ -89,7 +95,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
       page: this.currentPage,
       limit: this.itemsPerPage
     };
-    // Se categoria for 'Todos', não enviar filtro de categoria
     if (filters.category === 'Todos') {
       delete filters.category;
     }

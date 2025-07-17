@@ -29,6 +29,29 @@
     margin-left: 12px;
 }
 
+.cart-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background: #d32f2f;
+  color: #fff;
+  border-radius: 50%;
+  min-width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0 5px;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border: 2.5px solid #fff;
+  pointer-events: none;
+  line-height: 1;
+  transition: top 0.1s, right 0.1s, background 0.2s;
+}
+
 @media (max-width: 768px) {
     .toolbar-custom {
         flex-direction: column;

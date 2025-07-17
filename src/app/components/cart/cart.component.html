@@ -3,7 +3,6 @@
   ]"></app-header>
 
 <div class="container-mat">
-    <!-- Empty Cart -->
     <div *ngIf="cart.items.length === 0" class="empty-cart mat-elevation-z3">
         <div class="empty-cart-icon">🛒</div>
         <h2>Seu carrinho está vazio</h2>
@@ -13,7 +12,6 @@
         </button>
     </div>
 
-    <!-- Cart Items -->
     <div *ngIf="cart.items.length > 0" class="cart-content">
         <div class="cart-items">
             <mat-card *ngFor="let item of cart.items" class="cart-item product-card-mat mat-elevation-z3">
@@ -60,7 +58,6 @@
             </mat-card>
         </div>
 
-        <!-- Cart Summary -->
         <mat-card class="cart-summary mat-elevation-z3">
             <h2>Resumo do Pedido</h2>
 

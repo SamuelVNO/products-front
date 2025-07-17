@@ -61,7 +61,6 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   checkout(): void {
-    // Implementar checkout no futuro
     alert('Funcionalidade de checkout será implementada em breve!');
   }
 

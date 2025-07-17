@@ -43,7 +43,7 @@ export class ProductCreateComponent implements OnInit {
       this.price = this.productToEdit.price;
       this.image = this.productToEdit.image || '';
     } else if (this.isEditMode) {
-      // Carregar produto pelo id da rota se em modo edição
+      
       const id = this.route.snapshot.paramMap.get('id');
       if (id) {
         this.loading = true;

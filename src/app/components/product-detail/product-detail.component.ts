@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, takeUntil, Subscription } from 'rxjs';
 import { ProductService } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
@@ -23,7 +23,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   loading = false;
   error = '';
   quantity = 1;
+  cartCount = 0;
   private destroy$ = new Subject<void>();
+  private cartSub: Subscription | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,11 +36,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadProduct();
+    this.cartSub = this.cartService.cart$.subscribe(cart => {
+      this.cartCount = cart.totalItems;
+    });
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    if (this.cartSub) this.cartSub.unsubscribe();
   }
 
   loadProduct(): void {
