@@ -12,6 +12,10 @@ body {
   line-height: 1.6;
 }
 
+body, html {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
+
 /* Reset de botões */
 button {
   font-family: inherit;
